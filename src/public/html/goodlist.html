@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layout 后台大布局 - Layui</title>
+    <link rel="stylesheet" href="../stylesheets/layui.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/goodlist.css" />
+    <script type="text/javascript" src="../javascripts/layui.js"></script>
+</head>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">后台管理系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="#">首页</a></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="names">
+                        <img id="touxiang" src="" class="layui-nav-img">
+
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">退出</a></li>
+            </ul>
+        </div>
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;">商品管理</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="http://localhost:1777/html/addGoods.html">增加商品</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div id="tit">
+                <div id="add">添加<img src="../images/add.png" height="20" width="20" /></div>
+                <div id="del">删除<img src="../images/del.png" height="20" width="20" /></div>
+                <input type="button" value="搜索" id="ser" />
+                <select id="sel">
+                    <option>请选择分类(全部)</option>
+                    <!-- <option>衣服</option> -->
+                </select>
+            </div>
+            <table border="1" cellspacing="0" style="border-color:#ccc;" id="tab">
+                <thead>
+                    <tr bgcolor="#F2F2F2">
+                        <th><input type="checkbox" id="allchecked" /></th>
+                        <th>id</th>
+                        <th>商品名称</th>
+                        <th>分类</th>
+                        <th class="oldPriceRank">
+                            价格(原价)
+                            <img src="../images/up.png" height="7" width="12" />
+                            <img src="../images/down.png" height="7" width="12" />
+                        </th>
+                        <th class="newPriceRank">
+                            价格(现价)
+                            <img src="../images/up.png" height="7" width="12" />
+                            <img src="../images/down.png" height="7" width="12" />
+                        </th>
+                        <th class="storageRank">
+                            库存
+                            <img src="../images/up.png" height="7" width="12" />
+                            <img src="../images/down.png" height="7" width="12" />
+                        </th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+                <!-- <tr>
+          <td><input type="checkbox" class="chec" /></td>
+          <td>1</td>
+          <td>毛衣</td>
+          <td>衣服</td>
+          <td>899</td>
+          <td>666</td>
+          <td>22</td>
+          <td>2018-11-11</td>
+          <td>
+            <img src="../img/write.png" />
+            <img src="../img/del.png" />
+            <span>下架</span>
+          </td>
+        </tr> -->
+            </table>
+            <div id="page">
+                <!--         <span>1</span>
+        <span>2</span>
+        <span>3</span> -->
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+</script>
+<script type="text/javascript" src="../javascripts/jquery-1.10.1.min.js"></script>
+<script>
+    $(() => {
+        (async () => {
+            // let autoLogin = () => {
+            //     return new Promise((resolve, reject) => {
+            //         $.ajax({
+            //             type: "post",
+            //             headers: {
+            //                 token: localStorage.getItem("token")
+            //             },
+            //             aysnc: "true",
+            //             url: "http://localhost:233/autoLogin",
+
+            //             success(data) {
+            //                 console.log(data);
+            //                 resolve(data);
+            //             }
+            //         })
+            //     })
+            // }
+            // let isLogin = await autoLogin();
+            await zhexing();
+            // console.log(isLogin);
+            function zhexing() {
+                // if (isLogin.status) {
+                // $.ajax({
+                //     url: 'http://localhost:233/goodlist/touxiang2',
+                //     type: 'get',
+                //     success(str) {
+
+                //         console.log(str.data[0].src);
+                //         $('#touxiang').attr("src", str.data[0].src);
+                //     }
+                // });
+                //FIXME:获取头像
+                var imgurls = localStorage.getItem("imgurl");
+                var names = localStorage.getItem("name");
+                $('#touxiang').attr("src", imgurls);
+                $('#names').append(names)
+                //FIXME:点击跳转到添加商品的界面
+                $('#add').click(() => {
+                    location.href = "http://localhost:1777/html/addGoods.html";
+                });
+                //FIXME:从数据库那边获取数据进行整个渲染
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:1777/goodlist',
+                    async: "true",
+                    data: {}
+                }).done((str) => {
+                    // create(data);
+                    let dat = '';
+                    $.each(str.data, function (i, item) {
+                        var dats = `<tr data-id=${i}>
+                                    <td><input type="checkbox" class="chec" /></td>
+                                    <td>${i + 1}</td>
+                                    <td>${item.name}</td>
+                                    <td>${item.category}</td>
+                                    <td>${item.oldPrice}</td>
+                                    <td>${item.newPrice}</td>
+                                    <td>${item.storage}</td>
+                                    <td>${item.addTime}</td>
+                                    <td>
+                                   <img src="../images/write.png" class="writeOne" />
+                                   <img src="../images/del.png" class="delone" />
+                                <span class="status">${item.sta}</span>
+                              </td>
+                                </tr>`
+                        dat += dats;
+                        $('tbody').html(dat);
+                    })
+                    for (let j = 0; j < str.data.length; j++) {
+                        console.log($('.status').eq(j).html())
+                        if ($('.status').eq(j).html() == "上架") {
+                            $('.status').eq(j).css("background", "#FF4000");
+                        }
+                    }
+                })
+                //FIXME:删除商品（垃圾桶）
+                $('#tab').on('click', '.delone', function () {
+                    let canshu = $(this).parent().parent().children().eq(2).html();
+                    var mes = confirm('你确定要清除这件物品吗?');
+                    if (mes) {
+                        console.log(canshu);
+                        $(this).parent().parent().remove();
+                        $.ajax({
+                            type: "get",
+                            aysnc: "true",
+                            url: "http://localhost:1777/goodlist/delete",
+                            data: {
+                                'canshu': canshu
+                            },
+                            success(str) {
+                            }
+                        })
+                    }
+                });
+
+                //点击跳转编辑！
+                $('#tab').on('click', '.writeOne', function () {
+                    let name = $(this).parent().parent().children().eq(2).html();
+                    location.href = 'addGoods.html?name=' + name;
+                });
+
+                //点击上架
+                $('#tab').on('click', '.status', function () {
+                    let canshu = $(this).parent().parent().children().eq(2).html(); //名字匹配
+                    if ($(this).html() == "上架") {
+                        $(this).css("background", "#ccc");
+                        $(this).html('下架');
+                    } else {
+                        $(this).css("background", "#FF4000");
+                        $(this).html('上架');
+                    }
+                    $.ajax({
+                        type: "get",
+                        url: "/goodlist/update",
+                        async: true,
+                        data: {
+                            'canshu': canshu,
+                            'sta': $(this).html()
+                        },
+                        success: function (str) {
+                            console.log(str);
+                        }
+                    });
+                });
+                // } else {
+                //     console.log("caonima");
+                //     location.href = "http://localhost:1502";
+                // }
+            }
+        })()
+    });
+</script>
+
+</html>

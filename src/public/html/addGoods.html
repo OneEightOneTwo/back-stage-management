@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layout 后台大布局 - Layui</title>
+    <link rel="stylesheet" href="../stylesheets/layui.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/addGoods.css" />
+    <script type="text/javascript" src="../javascripts/layui.js"></script>
+</head>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">后台管理系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="../index.html">首页 / 商品管理 / 添加商品</a></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="names">
+                        <img id="touxiang" src="" class="layui-nav-img">
+
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">退出</a></li>
+            </ul>
+        </div>
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;">商品管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="goodlist.html">商品列表</a></dd>
+
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">添加</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="addpic.html">上传图片</a></dd>
+                            <dd><a href="http://localhost:1777/addGoods.html">massage</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <label>商品名称</label>
+            <input type="text" class="gname" />
+            <span>20字以内</span><br />
+            <label>商品副标题</label>
+            <input type="text" class="subtitle" />
+            <span>100字以内</span><br />
+            <label>商品价格</label>
+            <input type="text" class="oldPrice" />
+            <label>销售价格</label>
+            <input type="text" class="newPrice" /><br />
+            <label>商品分类</label>
+            <input type="text" class="category" /><br />
+           
+            <label>库存</label>
+            <input type="text" class="storage" /><br />
+            <label>商品属性</label>
+            <div class="attribute attribute1">
+                <span>热卖</span>
+                <img src="../images/tick2.png" height="16" width="16" />
+            </div>
+            <div class="attribute attribute2">
+                <span>推荐</span>
+                <img src="../images/tick2.png" height="16" width="16" />
+            </div>
+            <div class="attribute attribute3">
+                <span>促销</span>
+                <img src="../images/tick2.png" height="16" width="16" />
+            </div>
+            <br />
+            <label>上架</label>
+            <div class="open">
+                <span></span>
+                <span>OFF</span>
+            </div>
+            <br />
+            <label>商品描述</label>
+            <textarea class="tex"></textarea><br />
+            <input type="button" value="确认" id="conf" />
+        </div>
+    </div>
+    <script>
+        //JavaScript代码区域
+        layui.use('element', function () {
+            var element = layui.element;
+
+        });
+    </script>
+    <script type="text/javascript" src="../javascripts/jquery-1.10.1.min.js"></script>
+    <script>
+        //FIXME:获取头像
+        var imgurls = localStorage.getItem("imgurl");
+        var names = localStorage.getItem("name");
+        $('#touxiang').attr("src", imgurls);
+        $('#names').append(names) 
+        //FIXME:
+        // $.ajax({
+        //     url: 'http://localhost:1777/goodlist/touxiang2',
+        //     type: 'get',
+        //     success(str) {
+        //         $('#touxiang').attr("src", str.data[0].src);
+        //     }
+        // })
+        //FIXME:分类
+        let data = decodeURI(location.search).slice(1).split('=');
+        // console.log(data)
+
+        //渲染按钮
+        let html1 = '不热卖';
+        let html2 = '不推荐';
+        let html3 = '不促销';
+        let html4 = '下架';
+        let ok1 = true;
+        let ok2 = true;
+        let ok3 = true;
+        let ok4 = true;
+        $('.attribute1').on('click', function () {
+            if (ok1) {
+                html1 = '热卖';
+                $('.attribute span').eq(0).css('background', '#5FB878');
+                $('.attribute img').eq(0).attr('src', '../images/tick1.png');
+                ok1 = !ok1;
+            } else {
+                html1 = '不热卖';
+                $('.attribute span').eq(0).css('background', '#E4E4E4');
+                $('.attribute img').eq(0).attr('src', '../images/tick2.png');
+                ok1 = !ok1;
+            }
+        });
+        $('.attribute2').on('click', function () {
+            if (ok2) {
+                html2 = '推荐';
+                $('.attribute span').eq(1).css('background', '#5FB878');
+                $('.attribute img').eq(1).attr('src', '../images/tick1.png');
+                ok2 = !ok2;
+            } else {
+                html2 = '不推荐';
+                $('.attribute span').eq(1).css('background', '#E4E4E4');
+                $('.attribute img').eq(1).attr('src', '../images/tick2.png');
+                ok2 = !ok2;
+            }
+        });
+        $('.attribute3').on('click', function () {
+            if (ok3) {
+                html3 = '促销';
+                $('.attribute span').eq(2).css('background', '#5FB878');
+                $('.attribute img').eq(2).attr('src', '../images/tick1.png');
+                ok3 = !ok3;
+            } else {
+                html3 = '不促销';
+                $('.attribute span').eq(2).css('background', '#E4E4E4');
+                $('.attribute img').eq(2).attr('src', '../images/tick2.png');
+                ok3 = !ok3;
+            }
+        });
+        $('.open').on('click', function () {
+            if (ok4) {
+                html4 = '上架';
+                $('.open').children().eq(0).css('background', '#5FB878');
+                $('.open').children().eq(1).html('ON');
+                ok4 = !ok4;
+            } else {
+                html4 = '下架';
+                $('.open').children().eq(0).css('background', '#ccc');
+                $('.open').children().eq(1).html('OFF');
+                ok4 = !ok4;
+            }
+        });
+
+        //如果传了东西则修改 否则增加
+        if (data != '') {
+            $.ajax({
+                type: "get",
+                url: "/goodlist/searchName",
+                aysnc: "true",
+                data: {
+                    'canshu': data[1]
+                },
+                success(str) {
+                    $('.gname').val(str.data[0].name);
+                    $('.subtitle').val(str.data[0].subtitle);
+                    $('.oldPrice').val(str.data[0].oldPrice);
+                    $('.newPrice').val(str.data[0].newPrice);
+                    $('.category').val(str.data[0].category);
+                    $('.storage').val(str.data[0].storage);
+                    $('.tex').val(str.data[0].goodDetial);
+                    if (str.data[0].gAttribute1 == "热卖") {
+                        html1 = '热卖';
+                        $('.attribute span').eq(0).css('background', '#5FB878');
+                        $('.attribute img').eq(0).attr('src', '../images/tick1.png');
+                        ok1 = !ok1;
+                    } else {
+                        html1 = '不热卖';
+                        $('.attribute span').eq(0).css('background', '#E4E4E4');
+                        $('.attribute img').eq(0).attr('src', '../images/tick2.png');
+                    }
+                    if (str.data[0].gAttribute2 == "推荐") {
+                        html2 = '推荐';
+                        $('.attribute span').eq(1).css('background', '#5FB878');
+                        $('.attribute img').eq(1).attr('src', '../images/tick1.png');
+                        ok2 = !ok2;
+                    } else {
+                        html2 = '不推荐';
+                        $('.attribute span').eq(1).css('background', '#E4E4E4');
+                        $('.attribute img').eq(1).attr('src', '../images/tick2.png');
+                    }
+                    if (str.data[0].gAttribute3 == "促销") {
+                        html3 = '促销';
+                        $('.attribute span').eq(2).css('background', '#5FB878');
+                        $('.attribute img').eq(2).attr('src', '../images/tick1.png');
+                        ok3 = !ok3;
+                    } else {
+                        html3 = '不促销';
+                        $('.attribute span').eq(2).css('background', '#E4E4E4');
+                        $('.attribute img').eq(2).attr('src', '../images/tick2.png');
+                    }
+                    if (str.data[0].sta == "上架") {
+                        html4 = '上架';
+                        $('.open').children().eq(0).css('background', '#5FB878');
+                        $('.open').children().eq(1).html('ON');
+                        ok4 = !ok4;
+                    } else {
+                        html4 = '下架';
+                        $('.open').children().eq(0).css('background', '#ccc');
+                        $('.open').children().eq(1).html('OFF');
+                    }
+                }
+
+            });
+            $('#conf').on('click', function () {
+                let a1 = html1;
+                let a2 = html2;
+                let a3 = html3;
+                let a4 = html4;
+                $.ajax({
+                    type: "get",
+                    url: "/goodlist/updateGood",
+                    async: true,
+                    data: {
+                        'name': $('.gname').val(),
+                        'subtitle': $('.subtitle').val(),
+                        'oldPrice': $('.oldPrice').val(),
+                        'newPrice': $('.newPrice').val(),
+                        'category': $('.category').val(),
+                        'storage': $('.storage').val(),
+                        'gAttribute1': a1,
+                        'gAttribute2': a2,
+                        'gAttribute3': a3,
+                        'sta': a4,
+                        'goodDetial': $('.tex').val()
+                    },
+                    success: function (str) {
+                        location.href = 'goodlist.html';
+                    }
+                });
+            });
+        } else {
+            $('#conf').on('click', function () {
+                console
+                let a1 = html1;
+                let a2 = html2;
+                let a3 = html3;
+                let a4 = html4;
+                $.ajax({
+                    type: "get",
+                    url: "/goodlist/addGood",
+                    async: true,
+                    data: {
+                        'name': $('.gname').val(),
+                        'subtitle': $('.subtitle').val(),
+                        'oldPrice': $('.oldPrice').val(),
+                        'newPrice': $('.newPrice').val(),
+                        'category': $('.category').val(),
+                        'storage': $('.storage').val(),
+                        'gAttribute1': a1,
+                        'gAttribute2': a2,
+                        'gAttribute3': a3,
+                        'sta': a4,
+                        'goodDetial': $('.tex').val(),
+                        'PS': $('.tex').val(),
+                        'addTime': new Date().toLocaleDateString()
+                    },
+                    success: function (str) {
+                        location.href = 'goodlist.html';
+                    }
+
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

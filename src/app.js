@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signRouter = require('./routes/sign');
+var goodlistRouter = require('./routes/goodlist');
 
 var app = express();
 
@@ -19,11 +20,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public/html')));
+// app.use(express.static(path.join(__dirname, 'uploads')));
+// app.use((req,res,next)=>{
+//   res.append('Access-Control-Allow-Origin','*');
+// });
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/sign', signRouter);
-
+app.use('/goodlist', goodlistRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

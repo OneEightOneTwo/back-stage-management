@@ -1,0 +1,143 @@
+*{margin:0;padding:0;box-sizing:border-box;}
+.layui-body{
+    padding:30px;
+}
+#tab{
+    margin-bottom:30px;
+}
+#tit{
+    height: 64px;
+}
+#add,#del{
+    width: 88px;
+    height: 38px;
+    padding-left: 40px;
+    line-height: 38px;
+    position: relative;
+    float: left;
+    cursor:pointer;
+}
+#add{
+    background-color: #33AB9F;
+    color:white;
+    margin-right:20px;
+}
+#add img,#del img{
+    position:absolute;
+}
+#add img{
+    left:11px;
+    top:9px;
+}
+#del img{
+    left:10px;
+    top:8px;
+}
+#del{
+    border:1px solid #C9C9C9;
+}
+#sel{
+    width: 170px;
+    height: 38px;
+    border:1px solid #C9C9C9;
+    float:right;
+    margin-right:20px;
+    cursor:pointer;
+}
+#ser{
+    width: 86px;
+    height: 38px;
+    background:#33AB9F;
+    color:white;
+    float:right;
+    cursor:pointer;
+    margin-right:98px;
+}
+.layui-body table th,.layui-body table td{
+    height: 40px;
+    text-align:center;
+}
+.layui-body table tr th:nth-child(1){
+    width: 52px;
+}
+.layui-body table tr th:nth-child(2){
+    width: 40px;
+}
+.layui-body table tr th:nth-child(3){
+    width: 198px;
+}
+.layui-body table tr th:nth-child(4){
+    width: 110px;
+}
+.layui-body table tr th:nth-child(5),.layui-body table tr th:nth-child(6),.layui-body table tr th:nth-child(7),.layui-body table tr th:nth-child(8){
+    width: 106px;
+}
+.layui-body table tr th:nth-child(9){
+    width: 184px;
+}
+.layui-body table tr td img:nth-child(1){
+    width: 34px;
+    height: 26px;
+    background:#33AB9F;
+    margin-right:7px;
+    cursor:pointer;
+}
+.layui-body table tr td img:nth-child(2){
+    width: 34px;
+    height: 26px;
+    border:1px solid #C9C9C9;
+    margin-right:7px;
+    cursor:pointer;
+}
+.layui-body table tr span{
+    width: 50px;
+    height: 26px;
+    background:#CCCCCC;
+    color:white;
+    display: inline-block;
+    line-height: 26px;
+    position:relative;
+    top:1px;
+    cursor:pointer;
+}
+.oldPriceRank,.newPriceRank,.storageRank{
+    cursor:pointer;
+    position:relative;
+}
+.oldPriceRank img:nth-child(1),.newPriceRank img:nth-child(1){
+    position:absolute;
+    right:5px;
+    top:13px;
+}
+.oldPriceRank img:nth-child(2),.newPriceRank img:nth-child(2){
+    position:absolute;
+    right:5px;
+    top:20px;
+}
+.storageRank img:nth-child(1){
+    position:absolute;
+    right:23px;
+    top:13px;
+}
+.storageRank img:nth-child(2){
+    position:absolute;
+    right:23px;
+    top:20px;
+}
+#page{
+    float:right;
+}
+#page span{
+    display:inline-block;
+    width: 40px;
+    height: 40px;
+    background:#ccc;
+    color:#fff;
+    line-height: 40px;
+    text-align: center;
+    cursor:pointer;
+    margin:0 5px;
+}
+#page span:last-child{
+    margin-right:80px;
+}

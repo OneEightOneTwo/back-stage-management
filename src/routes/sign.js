@@ -15,9 +15,9 @@ router.post('/login', bodyParser.urlencoded({
     let data;
     try {
         data = await db.find('user', {
-            name,
-            password
-        }); //获取所有商品信息
+            'name':name,
+            'password':password
+        }); 
     } catch (err) {
         data = err;
     }
