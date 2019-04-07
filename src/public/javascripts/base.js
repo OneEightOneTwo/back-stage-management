@@ -145,6 +145,7 @@ exports.delete = (collectionName, query) => { //集合名，查询条件
 }
 //改
 exports.update = (collectionName, query, data) => { //集合名，查询条件,数据
+    console.log(query);
     return new Promise(async (resolve, reject) => {
         let {
             col,

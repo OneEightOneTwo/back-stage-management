@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layout 后台大布局 - Layui</title>
+    <link rel="stylesheet" href="../stylesheets/layui.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/addGoods.css" />
+    <script type="text/javascript" src="../javascripts/layui.js"></script>
+</head>
+<style>
+
+</style>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo">后台管理系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="./login.html">首页 / 商品管理 / 上传图片</a></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="names">
+                        <img id="touxiang" src="" class="layui-nav-img">
+                        
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">退出</a></li>
+            </ul>
+        </div>
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;">商品管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="goodlist.html">商品列表</a></dd>
+
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">添加</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="addpic.html">上传图片</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-body">
+            <form id="uploadForm">
+                <p>上传文件： <input type="file" name="logo" /></ p></br></br></br>
+                    <input id="up" style="margin-left:200px;" class="layui-btn layui-btn-sm m-2" type="button" value="上传" />
+            </form>
+        </div>
+        <script>
+            //JavaScript代码区域
+            layui.use('element', function () {
+                var element = layui.element;
+            });
+        </script>
+        <script type="text/javascript" src="../javascripts/jquery-1.10.1.min.js"></script>
+        <script>
+             //获取头像
+            var imgurls = localStorage.getItem("imgurl");
+            var names = localStorage.getItem("name");
+            $('#touxiang').attr("src", imgurls);
+            $('#names').append(names);
+            console.log(names)
+            function doUpload() {
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: 'http://localhost:1777/goodlist/addpic',
+                        type: 'post',
+                        cache: false, //不必须
+                        data: new FormData($('#uploadForm')[0]),
+                        processData: false,
+                        contentType: false,
+                        success: function (data) {
+                            // console.log( data.file.filename);
+                            $('#touxiang').attr("src",'../images/'+data.file.filename);
+                            resolve(data.file.filename);
+                        }
+                    })
+                })
+            }
+            //FIXME:该功能需要完善！！！！！！！！！！！图片路径到数据库
+            // function doUpload2(picName) {
+            //     return new Promise((resolve, reject) => {
+            //         $.ajax({
+            //             url: 'http://localhost:1777/goodlist/touxiang',
+            //             type: 'get',
+            //             data: {
+            //                 'picName': picName
+            //             },
+            //             success(str) {
+            //                 console.log(str);
+            //                 resolve(1);
+            //             }
+            //         })
+            //     })
+            // }
+
+            $('#up').click(async () => {
+                var picName = await doUpload();
+                // await doUpload2(picName);
+                // let touxiangname = await doUpload3();
+                // console.log(touxiangname);
+            })
+
+        </script>
+
+</body>
+
+</html>

@@ -7,7 +7,7 @@ var multer = require('multer');
 var storage = multer.diskStorage({
 	//设置上传后文件路径，uploads文件夹会自动创建。
 	destination: function(req, file, cb) {
-		cb(null, './uploads')
+		cb(null, './public/images')
 	},
 	//给上传文件重命名，获取添加后缀名
 	filename: function(req, file, cb) {
@@ -21,28 +21,15 @@ var storage = multer.diskStorage({
 var upload = multer({
 	storage: storage
 });
-
-
-//router.post('/addpic', upload.single('logo'), function(req, res, next) {
-	// res.append("Access-Control-Allow-Origin","*");
+//上传头像
+router.post('/addpic',upload.single('logo'), (req, res) => {
+    res.append("Access-Control-Allow-Origin","*");
 	// console.log(req.file)
 	// console.log('文件类型：%s', req.file.mimetype);
 	// console.log('原始文件名：%s', req.file.originalname);
 	// console.log((req.file.originalname).split("."))
 	// console.log('文件大小：%s', req.file.size);
 	// console.log('文件保存路径：%s', req.file.path);
-	// res.send({
-	// 	wscats_code: '0'
-	// });
-//});
-router.post('/addpic',upload.single('logo'), (req, res) => {
-    res.append("Access-Control-Allow-Origin","*");
-	console.log(req.file)
-	console.log('文件类型：%s', req.file.mimetype);
-	console.log('原始文件名：%s', req.file.originalname);
-	console.log((req.file.originalname).split("."))
-	console.log('文件大小：%s', req.file.size);
-	console.log('文件保存路径：%s', req.file.path);
 	res.send({
         wscats_code: '0',
         file:req.file
@@ -50,7 +37,7 @@ router.post('/addpic',upload.single('logo'), (req, res) => {
 });
 
 
-
+//请求列表页渲染
 router.get('/', async (req, res) => {
     let data;
     try {
@@ -60,7 +47,7 @@ router.get('/', async (req, res) => {
     }
     res.send(data);
 });
-
+//删除
 router.get('/delete', async (req, res) => {
     let data;
     try {
@@ -71,7 +58,7 @@ router.get('/delete', async (req, res) => {
     }
     res.send(data);
 });
-
+//增加商品
 router.get('/addGood', async (req, res) => {
     let data;
     let { name, subtitle, oldPrice, newPrice, category, storage, gAttribute1, gAttribute2, gAttribute3, sta, goodDetial, PS, addTime } = req.query;
@@ -82,7 +69,7 @@ router.get('/addGood', async (req, res) => {
     }
     res.send(data);
 });
-
+//搜索商品名字
 router.get('/searchName', async (req, res) => {
     let data;
     try {
@@ -92,7 +79,7 @@ router.get('/searchName', async (req, res) => {
     }
     res.send(data);
 });
-
+//FIXME:上架功能需完善
 router.get('/update', async (req, res) => {
     let data;
     try {
@@ -102,17 +89,27 @@ router.get('/update', async (req, res) => {
     }
     res.send(data);
 });
-
+//FIXME:头像上传功能需完善
 router.get('/touxiang', async (req, res) => {
     let data;
     try {
-        data = await db.update('touxiang', { dd: "aa" }, { src: req.query.picName });
+        console.log(req.query.picName)
+        data = await db.update('user', { tx: "" }, { src: req.query.picName });
     } catch (err) {
         data = err;
     }
     res.send(data);
 });
-
+// router.get('/touxiang', async (req, res) => {
+//     let data;
+//     try {
+//         data = await db.update('touxiang', { dd: "aa" }, { src: req.query.picName });
+//     } catch (err) {
+//         data = err;
+//     }
+//     res.send(data);
+// });
+//FIXME:头像获取功能需完善
 router.get('/touxiang2', async(req, res) => {
     let data;
     try {
@@ -123,7 +120,7 @@ router.get('/touxiang2', async(req, res) => {
     res.send(data);
     // console.log("asdfghjkl");
 });
-
+//重复- -
 router.get('/updateGood', async (req, res) => {
     let data;
     let { name, subtitle, oldPrice, newPrice, category, storage, gAttribute1, gAttribute2, gAttribute3, sta, goodDetial } = req.query;
